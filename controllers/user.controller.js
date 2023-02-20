@@ -11,13 +11,13 @@ const signup = async (req, res) => {
 
   if (user) {
     res
-      .status(200)
+      .status(401)
       .send({ msg: "User already exists. Please Login", value: false });
   }
 
   bcrypt.hash(password, 6, async function (err, hash) {
     if (err) {
-      res.send({
+      res.status(501).send({
         msg: "Something went wrong, please try again later",
         value: false,
       });
@@ -30,10 +30,10 @@ const signup = async (req, res) => {
     });
     try {
       await user.save();
-      res.send({ msg: "Signup Successful", value: true });
+      res.status(201).send({ msg: "Signup Successful", value: true });
     } catch (err) {
       console.log(err);
-      res.send({
+      res.status(501).send({
         msg: "Something went wrong, please try again later",
         value: false,
       });
@@ -50,13 +50,15 @@ const login = async (req, res) => {
   bcrypt.compare(password, hash, function (err, result) {
     if (err) {
       console.log(err);
-      res.send({ msg: "Something went wrong, Please try again " });
+      res,status(501).send({ msg: "Something went wrong, Please try again " });
     }
     if (result) {
       const token = jwt.sign({ userId: user._Id }, process.env.PRIVATE_KEY);
-      res.send({ msg: "Login Successful", token });
+      res.status(201).send({ msg: "Login Successful", token });
     } else {
-      res.send({ msg: "Invalid credentials, Please Signup if you haven't" });
+      res
+        .status(401)
+        .send({ msg: "Invalid credentials, Please Signup if you haven't" });
     }
   });
 };
