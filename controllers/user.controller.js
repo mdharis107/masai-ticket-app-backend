@@ -10,35 +10,33 @@ const signup = async (req, res) => {
   const user = await UserModel.findOne({ email });
 
   if (user) {
-    res
-      .status(401)
-      .send({ msg: "User already exists. Please Login", value: false });
-  }
+    res.send({ msg: "User already exists. Please Login", value: false });
+  } else {
+    bcrypt.hash(password, 6, async function (err, hash) {
+      if (err) {
+        res.status(501).send({
+          msg: "Something went wrong, please try again later",
+          value: false,
+        });
+      }
 
-  bcrypt.hash(password, 6, async function (err, hash) {
-    if (err) {
-      res.status(501).send({
-        msg: "Something went wrong, please try again later",
-        value: false,
+      const user = new UserModel({
+        email,
+        name,
+        password: hash,
       });
-    }
-
-    const user = new UserModel({
-      email,
-      name,
-      password: hash,
+      try {
+        await user.save();
+        res.status(201).send({ msg: "Signup Successful", value: true });
+      } catch (err) {
+        console.log(err);
+        res.status(501).send({
+          msg: "Something went wrong, please try again later",
+          value: false,
+        });
+      }
     });
-    try {
-      await user.save();
-      res.status(201).send({ msg: "Signup Successful", value: true });
-    } catch (err) {
-      console.log(err);
-      res.status(501).send({
-        msg: "Something went wrong, please try again later",
-        value: false,
-      });
-    }
-  });
+  }
 };
 
 const login = async (req, res) => {
@@ -50,7 +48,7 @@ const login = async (req, res) => {
   bcrypt.compare(password, hash, function (err, result) {
     if (err) {
       console.log(err);
-      res,status(501).send({ msg: "Something went wrong, Please try again " });
+      res.status(501).send({ msg: "Something went wrong, Please try again " });
     }
     if (result) {
       const token = jwt.sign({ userId: user._Id }, process.env.PRIVATE_KEY);
