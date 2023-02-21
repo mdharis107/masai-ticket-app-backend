@@ -3,6 +3,8 @@ const { TicketModel } = require("../models/ticket.model");
 const postTickets = async (req, res) => {
   const { title, category, message, userId } = req.body;
 
+  // console.log(req.body)
+
   const ticket = new TicketModel({
     title,
     category,
@@ -11,11 +13,19 @@ const postTickets = async (req, res) => {
   });
   try {
     await ticket.save();
-    req.send({ msg: "Ticket has been created" });
+    res.send({ msg: "Ticket has been created" });
   } catch (err) {
     console.log(err);
-    req.send({ msg: "Something went wrong" });
+    res.send({ msg: "Something went wrong" });
   }
+};
+
+const getTickets = async (req, res) => {
+  const { userId } = req.params;
+
+  const tickets = await TicketModel.find({ userId });
+
+  res.send(tickets);
 };
 
 const bookmark = () => {};
@@ -23,4 +33,5 @@ const bookmark = () => {};
 module.exports = {
   postTickets,
   bookmark,
+  getTickets
 };

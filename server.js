@@ -3,6 +3,7 @@ const { connection } = require("./config/db");
 const cors = require("cors");
 const { UserRouter } = require("./routes/user.routes");
 const { TicketRouter } = require("./routes/ticket.routes");
+const { authentication } = require("./middlewares/authentication");
 
 require("dotenv").config();
 
@@ -18,7 +19,9 @@ app.get("/", (req, res) => {
 
 app.use("/user", UserRouter);
 
-app.use("ticket", TicketRouter);
+app.use(authentication);
+
+app.use("/tickets", TicketRouter);
 
 app.listen(PORT, async () => {
   try {

@@ -12,6 +12,7 @@ const authentication = (req, res, next) => {
     if (err) {
       res.send({ msg: "Something went wrong, Please try again" });
     } else {
+      // console.log(decoded)
       req.body.userId = decoded.userId;
       next();
     }
