@@ -22,10 +22,24 @@ const postTickets = async (req, res) => {
 
 const getTickets = async (req, res) => {
   const { userId } = req.params;
+  let sort = req.query.sort || "createdAt";
 
-  const tickets = await TicketModel.find({ userId });
+  req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
 
-  res.send(tickets);
+  let sortBy = {};
+  if (sort[1]) {
+    sortBy[sort[0]] = sort[1];
+  } else {
+    sortBy[sort[0]] = "asc";
+  }
+
+  const tickets = await TicketModel.find({ userId }).sort(sortBy);
+
+  if (tickets.length < 1) {
+    res.send("No ticket has been created yet");
+  } else {
+    res.send(tickets);
+  }
 };
 
 const bookmark = () => {};
@@ -33,5 +47,8 @@ const bookmark = () => {};
 module.exports = {
   postTickets,
   bookmark,
-  getTickets
+  getTickets,
 };
+
+
+// 2023-02-22T05:08:18.691Z
