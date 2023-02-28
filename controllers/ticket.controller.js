@@ -3,7 +3,7 @@ const { TicketModel } = require("../models/ticket.model");
 const postTickets = async (req, res) => {
   const { title, category, message, userId } = req.body;
 
-  // console.log(req.body)
+  // console.log(req.body
 
   const ticket = new TicketModel({
     title,
@@ -38,7 +38,7 @@ const getTickets = async (req, res) => {
   if (tickets.length < 1) {
     res.send("No ticket has been created yet");
   } else {
-    res.send(tickets);
+    res.send(tickets); 
   }
 };
 

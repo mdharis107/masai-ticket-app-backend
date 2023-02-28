@@ -45,7 +45,7 @@ const login = async (req, res) => {
   const user = await UserModel.findOne({ email });
 
   if (!user) {
-    res.send({ msg: "Please signup and then login" });
+    res.status(404).send({ msg: "Please signup and then login" });
   } else {
     const hash = user.password;
     bcrypt.compare(password, hash, function (err, result) {
