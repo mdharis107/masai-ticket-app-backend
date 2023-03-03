@@ -9,6 +9,8 @@ const signup = async (req, res) => {
 
   const user = await UserModel.findOne({ email });
 
+  
+
   if (user) {
     res.send({ msg: "User already exists. Please Login", value: false });
   } else {
