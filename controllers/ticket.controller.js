@@ -13,7 +13,7 @@ const postTickets = async (req, res) => {
   });
   try {
     await ticket.save();
-    res.send({ msg: "Ticket has been created" });
+    res.status(201).send({ msg: "Ticket has been created" });
   } catch (err) {
     console.log(err);
     res.send({ msg: "Something went wrong" });
@@ -36,9 +36,9 @@ const getTickets = async (req, res) => {
   const tickets = await TicketModel.find({ userId }).sort(sortBy);
 
   if (tickets.length < 1) {
-    res.send("No ticket has been created yet");
+    res.status(501).send({ msg: "No ticket has been created yet" });
   } else {
-    res.send(tickets); 
+    res.send(tickets);
   }
 };
 
@@ -49,6 +49,5 @@ module.exports = {
   bookmark,
   getTickets,
 };
-
 
 // 2023-02-22T05:08:18.691Z

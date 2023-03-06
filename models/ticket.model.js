@@ -17,3 +17,4 @@ const TicketModel = mongoose.model("ticket", ticketSchema);
 module.exports = {
   TicketModel,
 };
+ 
