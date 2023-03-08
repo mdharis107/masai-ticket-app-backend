@@ -4,6 +4,7 @@ const cors = require("cors");
 const { UserRouter } = require("./routes/user.routes");
 const { TicketRouter } = require("./routes/ticket.routes");
 const { authentication } = require("./middlewares/authentication");
+const { BookmarkRouter } = require("./routes/bookmark.routes");
 
 require("dotenv").config();
 
@@ -22,6 +23,8 @@ app.use("/user", UserRouter);
 app.use(authentication);
 
 app.use("/tickets", TicketRouter);
+
+app.use("/bookmarks",BookmarkRouter)
 
 app.listen(PORT, async () => {
   try {

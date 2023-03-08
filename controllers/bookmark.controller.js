@@ -16,8 +16,8 @@ const postBookmark = async (req, res) => {
     res.status(201).send({ msg: "Ticket has been Bookmarked" });
   } catch (err) {
     console.log(err);
-    res.send({ msg: "Something went wrong" });
+    res.status(401).send({ msg: "Something went wrong" });
   }
 };
 
-module.exports + { postBookmark, getBookmark };
+module.exports = { postBookmark, getBookmark };

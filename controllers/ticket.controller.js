@@ -46,7 +46,6 @@ const getTickets = async (req, res) => {
 
 module.exports = {
   postTickets,
-  bookmark,
   getTickets,
 };
 
