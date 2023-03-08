@@ -20,4 +20,18 @@ const postBookmark = async (req, res) => {
   }
 };
 
-module.exports = { postBookmark, getBookmark };
+const deleteBookmark = async (req, res) => {
+  const { ticketId } = req.params;
+
+  const ticket = await BookmarkModel.findByIdAndDelete({ _id:ticketId });
+
+  if(ticket){
+    res.send({msg:"Removed ticket from bookmark"})
+  }
+  else{
+    res.status(501).send({msg:"Couldn't remove bookmark"})
+  }
+
+};
+
+module.exports = { postBookmark, getBookmark, deleteBookmark };
