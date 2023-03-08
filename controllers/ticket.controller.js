@@ -42,7 +42,7 @@ const getTickets = async (req, res) => {
   }
 };
 
-const bookmark = () => {};
+// const bookmark = () => {};
 
 module.exports = {
   postTickets,

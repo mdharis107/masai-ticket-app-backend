@@ -11,7 +11,7 @@ TicketRouter.get("/:userId", getTickets);
 
 TicketRouter.post("/addTicket", postTickets);
 
-TicketRouter.post("/bookmark", bookmark);
+// TicketRouter.post("/bookmark", bookmark);
 
 module.exports = {
   TicketRouter,
