@@ -24,7 +24,7 @@ app.use(authentication);
 
 app.use("/tickets", TicketRouter);
 
-app.use("/bookmarks",BookmarkRouter)
+app.use("/bookmarks",BookmarkRouter)   
 
 app.listen(PORT, async () => {
   try {

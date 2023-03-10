@@ -21,17 +21,19 @@ const postBookmark = async (req, res) => {
 };
 
 const deleteBookmark = async (req, res) => {
+  console.log(req.body);
   const { ticketId } = req.params;
 
-  const ticket = await BookmarkModel.findByIdAndDelete({ _id:ticketId });
+  const ticket = await BookmarkModel.findOneAndDelete({
+    _id: ticketId,
+    userId: req.body.userId,
+  });
 
-  if(ticket){
-    res.send({msg:"Removed ticket from bookmark"})
+  if (ticket) {
+    res.send({ msg: "Removed ticket from bookmark" });
+  } else {
+    res.status(403).send({ msg: "Ticket is not there to Remove" });
   }
-  else{
-    res.status(501).send({msg:"Couldn't remove bookmark"})
-  }
-
 };
 
 module.exports = { postBookmark, getBookmark, deleteBookmark };
