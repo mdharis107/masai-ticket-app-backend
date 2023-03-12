@@ -2,11 +2,12 @@ const { Router } = require("express");
 const {
   postBookmark,
   deleteBookmark,
+  getBookmark,
 } = require("../controllers/bookmark.controller");
 
 const BookmarkRouter = Router();
 
-BookmarkRouter.get("/:userId");
+BookmarkRouter.get("/:userId", getBookmark);
 
 BookmarkRouter.post("/addBookmark", postBookmark);
 
@@ -16,4 +17,4 @@ BookmarkRouter.delete("/remove/:ticketId", deleteBookmark);
 
 module.exports = {
   BookmarkRouter,
-};
+}; 

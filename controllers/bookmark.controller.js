@@ -1,6 +1,16 @@
 const { BookmarkModel } = require("../models/bookmark.model");
 
-const getBookmark = () => {};
+const getBookmark = async (req, res) => {
+  const { userId } = req.params;
+
+  const tickets = await BookmarkModel.find({ userId });
+
+  if (tickets.length < 1) {
+    res.status(501).send({ msg: "No ticket has been created yet" });
+  } else {
+    res.send(tickets);
+  }
+};
 
 const postBookmark = async (req, res) => {
   const { title, category, message, userId } = req.body;
@@ -21,7 +31,7 @@ const postBookmark = async (req, res) => {
 };
 
 const deleteBookmark = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { ticketId } = req.params;
 
   const ticket = await BookmarkModel.findOneAndDelete({
@@ -30,7 +40,7 @@ const deleteBookmark = async (req, res) => {
   });
 
   if (ticket) {
-    res.send({ msg: "Removed ticket from bookmark" });
+    res.status(201).send({ msg: "Removed ticket from bookmark" });
   } else {
     res.status(403).send({ msg: "Ticket is not there to Remove" });
   }
