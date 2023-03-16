@@ -39,7 +39,7 @@ const getTickets = async (req, res) => {
   if (tickets.length < 1) {
     res.status(501).send({ msg: "No ticket has been created yet" });
   } else {
-    res.send(tickets);
+    res.status(201).send(tickets);
   }
 };
 
